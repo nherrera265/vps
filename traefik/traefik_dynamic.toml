@@ -1,0 +1,12 @@
+[http.middlewares.simpleAuth.basicAuth]
+  users = [
+    "admin:1234567890=123" # htpasswd -nb admin PASSWORD output here
+  ]
+
+[http.routers.api] # monitor.foo.com repace with monitor.yourdoman.com
+  rule = "Host(`monitor.foo.com`)
+  entrypoints = ["websecure"]
+  middlewares = ["simpleAuth"]
+  service = "api@internal"
+  [http.routers.api.tls]
+    certResolver = "lets-encrypt"
